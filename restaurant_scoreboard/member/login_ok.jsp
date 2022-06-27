@@ -19,13 +19,15 @@
 	ResultSet rs = pstmt.executeQuery();
 	
 	if(rs.next()) {
-		session.setAttribute("userid", rs.getString("username"));
+		session.setAttribute("userid", rs.getString("userid"));
+		session.setAttribute("name", rs.getString("username"));
+		session.setAttribute("pwd", rs.getString("userpwd"));
 		
 		rs.close();
 		pstmt.close();
 		conn.close();
 		
-		response.sendRedirect("main.jsp");
+		response.sendRedirect("../main.jsp");
 	}
 	else {
 		rs.close();

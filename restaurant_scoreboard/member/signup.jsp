@@ -115,7 +115,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<a href="main.jsp">홈으로</a>&nbsp;&nbsp;&nbsp;
+					<a href="../main.jsp">홈으로</a>&nbsp;&nbsp;&nbsp;
 					<a href="login.jsp">로그인</a>
 				</td>
 			</tr>
