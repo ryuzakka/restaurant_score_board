@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+body {
+		margin:50px;
+}
+.header {
+	width:800px;
+	height:70px;
+	padding-top:1px;
+	margin:auto;
+	background:orange;
+	color:white;
+	text-align:center;
+}
+.navbar {
+	width:700px;
+	margin:13px auto 7px auto;
+	text-align:right;
+}
+.navbar btn {
+	margin-top:10px;
+}
+ul {
+	list-style:none;
+	margin:6px 6px;
+}
+li {
+	display:inline-block;
+	width:90px;	
+}
