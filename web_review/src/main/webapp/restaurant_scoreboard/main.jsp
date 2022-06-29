@@ -75,7 +75,7 @@
 				space += " └ ";
 			}
 		%>
-			<td><a href=""> <%=space%><%=rs.getString("title") %> </a></td>
+			<td><a href="board/viewcnt.jsp?id=<%=rs.getString("id")%>"> <%=space%><%=rs.getString("title") %> </a></td>
 			<td> <%=rs.getString("name") %> </td>
 			<td> <%=rs.getString("viewcnt") %> </td>
 			<td> <%=rs.getString("writeday") %> </td>
@@ -86,6 +86,9 @@
 	<% } %>
 	</table>
 	
+	
+	<!-- 페이징 -->
+	<div align="center">
 <%
 	int num = pager / 10;
 	if((pager%10) == 0) {
@@ -104,6 +107,6 @@
 		}
 	}
 %>
-	
+	</div>
 </body>
 </html>
