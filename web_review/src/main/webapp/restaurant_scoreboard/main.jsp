@@ -110,3 +110,9 @@
 	</div>
 </body>
 </html>
+
+<%
+	rs.close();
+	pstmt.close();
+	conn.close();
+%>

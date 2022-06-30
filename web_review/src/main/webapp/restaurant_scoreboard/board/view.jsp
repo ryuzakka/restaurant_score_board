@@ -6,6 +6,7 @@
 	String db = "jdbc:mysql://localhost:3306/ezen";
 	Connection conn = DriverManager.getConnection(db, "root", "1234");
 	
+	request.setCharacterEncoding("UTF-8");
 	String id = request.getParameter("id");
 	
 	String sql = "select * from restaurant_board where id=?";
@@ -22,6 +23,38 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../css/nav.css" type="text/css">
 <title>view</title>
+<script>
+	function update_cmmt(num, nick, comment) {
+		var form = document.cmmtForm;
+		form.id.value = num;
+		form.name.value = nick;
+		form.name.disabled = false;
+		form.content.value = comment;
+		form.content.disabled = false;
+		form.action = "comment_update.jsp";
+		form.submit.value = "댓글 수정";
+	}
+	function origin_cmmt() {
+		var form = document.cmmtForm;
+		form.id.value = "";
+		form.name.value = "";
+		form.name.disabled = false;
+		form.content.value = "";
+		form.content.disabled = false;
+		form.action = "comment_write.jsp";
+		form.submit.value = "댓글 작성";
+	}
+	function delete_cmmt(num, nick, comment) {
+		var form = document.cmmtForm;
+		form.id.value = num;
+		form.name.value = nick;
+		form.name.disabled = true;
+		form.content.value = comment;
+		form.content.disabled = true;
+		form.action = "comment_delete.jsp";
+		form.submit.value = "댓글 삭제";
+	}
+</script>
 </head>
 <body>	<!-- board/view.jsp -->
 	
@@ -78,8 +111,50 @@
 		</tr>
 	</table>
 	
-
-
-
+	<p>
+	<h3 align="center">댓 글</h3>
+	<form name="cmmtForm" method="post" action="comment_write.jsp" align="center">
+		<input type="hidden" name="id" value="">
+		<input type="hidden" name="bid" value="<%=id%>">
+		<input type="text" name="name" placeholder="이름" required>
+		<input type="text" name="content" placeholder="내용">
+		<input type="password" name="pwd" placeholder="비밀번호" size="5" required>
+		<input type="submit" name="submit" value="댓글 작성">
+	</form>
+	
+	<%
+		sql = "select * from restaurant_comment where bid=? group by id desc";
+		
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, id);
+		
+		rs = pstmt.executeQuery();
+	%>
+	
+	<table width="550" align="center">
+		<tr align="center">
+			<td> 이름 </td>
+			<td> 내용 </td>
+			<td> 작성일 </td>
+			<td></td>
+		</tr>
+	<%	while(rs.next()) { %>
+		<tr>
+			<td> <%=rs.getString("name") %> </td>
+			<td onclick="origin_cmmt()"> <%=rs.getString("comment") %> </td>
+			<td> <%=rs.getString("writeday") %> </td>
+			<td>
+				<input type="button" value="수정" onclick="update_cmmt(<%=rs.getInt("id")%>,'<%=rs.getString("name") %>','<%=rs.getString("comment") %>')">
+				<input type="button" value="삭제" onclick="delete_cmmt(<%=rs.getInt("id")%>,'<%=rs.getString("name") %>','<%=rs.getString("comment") %>')">
+			</td>
+		</tr>
+	<%	} %>
+	</table>
+	
 </body>
 </html>
+<%
+	rs.close();
+	pstmt.close();
+	conn.close();
+%>
