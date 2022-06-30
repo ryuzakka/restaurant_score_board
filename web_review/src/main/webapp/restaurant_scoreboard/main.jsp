@@ -87,8 +87,8 @@
 	</table>
 	
 	
-	<!-- 페이징 -->
 	<div align="center">
+<!-- 페이징 계산 -->
 <%
 	int num = pager / 10;
 	if((pager%10) == 0) {
@@ -97,7 +97,23 @@
 	int pstart = (num * 10) + 1;
 	int pend = pstart + 9;
 	
-	for(int i=pstart; i<pend; i++) {
+	sql = "select ceil(count(*)/10) as tot from restaurant_board";
+	pstmt = conn.prepareStatement(sql);
+	rs = pstmt.executeQuery();
+	rs.next();
+	int total = rs.getInt("tot");
+	if(pend > total)
+		pend = total;
+%>
+
+<!-- 이전 10페이지 -->
+<% 	if((pstart/10) > 0) { %>
+	<a href="main.jsp?pager=<%=pstart-1%>"> < </a>
+<%	} %>
+
+<!-- 페이지 노출 -->
+<%
+	for(int i=pstart; i<pend+1; i++) {
 		if(pager == i) {
 %>
 		<span><%=i%></span>
@@ -107,6 +123,11 @@
 		}
 	}
 %>
+
+<!-- 이후 10페이지 -->
+<%	if(pend < total) { %>
+	<a href="main.jsp?pager=<%=pend+1%>"> > </a>
+<%	} %>
 	</div>
 </body>
 </html>

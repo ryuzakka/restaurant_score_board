@@ -82,7 +82,13 @@
 		</tr>
 		<tr>
 			<td> 사 진 </td>
-			<td> <img src="../img/<%=rs.getString("fname")%>" width="350"> </td>
+			<td>
+			<% if(rs.getString("fname") != null) { %>
+				<img src="../img/<%=rs.getString("fname")%>" width="350">
+			<% } else { %>
+				<span>등록된 사진이 없습니다.</span>
+			<% } %>
+			</td>
 		</tr>
 		<tr>
 			<td> 내 용 </td>
